@@ -21,7 +21,14 @@ public class copyDemo {
 
         for (String name : list){
             File file = new File(name);
+
+            //目标目录+文件名
             String ToName =FirstName+ file.getName();
+            //判断文件中是否有同名文件
+            if (list.contains(name)){
+                ToName = FirstName+"(1)"+file.getName();
+            }
+            //目标目录+文件名
             try (InputStream input = new FileInputStream(name);
                  OutputStream output = new FileOutputStream(ToName))
             {
