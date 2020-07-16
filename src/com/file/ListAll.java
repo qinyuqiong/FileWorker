@@ -73,6 +73,7 @@ public class ListAll {
         System.out.println("==========");
         if (files != null) {
             for (File f : files) {
+
                     System.out.println(f);
             }
         }
@@ -92,19 +93,23 @@ public class ListAll {
          //将子目录遍历
         for (String file : sonList){
             //files.addAll(ToFiles(file,LastName));
-            //通过文件名加入文件
-            File SonFiles = new File(file);
-            //获取子目录下所有文件和文件夹
-            File[] listFiles = SonFiles.listFiles();
+            //通过文件名得子文件夹下的文件和文件夹
+            List<String> list = ToFiles(file, LastName);
+            List<String> sonList1 = getSonList(file);
+
+            //将子文件夹下的文件加入集合中
+            keepList.setFiles(list);
+
             //判断文件夹是否为空，为空跳过
-            if (listFiles != null){
+            if (sonList1 != null){
                 //不为空，遍历
-                for (File f : listFiles){
+                for (String f : sonList1){
                     //判断是否为目录，是则递归，不是添加到文件list中
-                    if(f.isDirectory()){
-                        ToAllList(f.toString(),LastName);
+                    File file1 = new File(f);
+                    if(file1.isDirectory()){
+                        ToAllList(f,LastName);
                     }else{
-                        keepList.setFiles(f.toString());
+                        keepList.setFiles(ToFiles(f, LastName));
                     }
                 }
             }
